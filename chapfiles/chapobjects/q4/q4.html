@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChapObjects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: left;
+            margin: 10px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0073e6;
+            font-weight: bold;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #005bb5;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #0073e6;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: red;
+        }
+
+        li {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        li li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .script-container {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: left;
+            margin: 10px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Button Styles */
+        button {
+            background-color: #3e4144;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 15px;
+            margin-left: 36%;
+        }
+
+        button:hover {
+            background-color: #b50000;
+        }
+
+        button:focus {
+            outline: none; /* Remove default outline */
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../../../index.html" class="back-link">&larr; Back</a>
+    <div class="container">
+        <h1>Chapter Objects</h1>
+        <ul>
+            <li><a href="../q1/q1.html">Question #1</a></li>
+            <li><a href="../q2/q2.html">Question #2</a></li>
+            <li><a href="../q3/q3.html">Question #3</a></li>
+            <li><a href="q4.html">Question #4</a></li>
+        </ul>
+    </div>
+
+    <div class="script-container">
+
+        <h2>Enter Population Record</h2>
+
+        <form id="populationForm" onsubmit="return saveRecord()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required><br><br>
+
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="Male" required> Male
+            <input type="radio" id="female" name="gender" value="Female" required> Female
+            <input type="radio" id="other" name="gender" value="Other" required> Other<br><br>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" required><br><br>
+
+            <label for="education">Education:</label>
+            <select id="education" required>
+                <option value="High School">High School</option>
+                <option value="Bachelors">Bachelors</option>
+                <option value="Masters">Masters</option>
+                <option value="PhD">PhD</option>
+            </select><br><br>
+
+            <label for="profession">Profession:</label>
+            <select id="profession" required>
+                <option value="Doctor">Doctor</option>
+                <option value="Engineer">Engineer</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Other">Other</option>
+            </select><br><br>
+
+            <button type="submit">Save Record</button>
+        </form>
+
+        <h3><u>Saved Records:</u></h3>
+        <table id="recordTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Education</th>
+                    <th>Profession</th>
+                </tr>
+            </thead>
+            <tbody id="recordList">
+            </tbody>
+        </table>
+
+        <script>
+            var records = []; 
+
+            function PopulationRecord(name, gender, address, education, profession) {
+                this.name = name;
+                this.gender = gender;
+                this.address = address;
+                this.education = education;
+                this.profession = profession;
+            }
+
+            function displayRecord(record) {
+                var recordList = document.getElementById('recordList');
+                var row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.name}</td>
+                    <td>${record.gender}</td>
+                    <td>${record.address}</td>
+                    <td>${record.education}</td>
+                    <td>${record.profession}</td>
+                `;
+                recordList.appendChild(row);
+            }
+
+            function saveRecord() {
+                var name = document.getElementById('name').value;
+                var address = document.getElementById('address').value;
+                var gender = document.querySelector('input[name="gender"]:checked').value;
+                var education = document.getElementById('education').value;
+                var profession = document.getElementById('profession').value;
+
+                var newRecord = new PopulationRecord(name, gender, address, education, profession);
+                records.push(newRecord);
+                displayRecord(newRecord);
+
+                document.getElementById('populationForm').reset();
+                return false; // Prevent form submission
+            }
+        </script>
+    </div>
+</body>
+
+</html>
